@@ -22,61 +22,38 @@ grunt.loadNpmTasks('grunt-regex-check');
 ### Overview
 In your project's Gruntfile, add a section named `"regex-check"` to the data object passed into `grunt.initConfig()`.
 
-```js
-grunt.initConfig({
-  "regex-check": {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-})
-```
-
 ### Options
 
-#### options.separator
+#### options.excluded
 Type: `String`
-Default value: `',  '`
+Default value: none
+Mandatory: No
 
 A string value that is used to do something with whatever.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.pattern
+Type: `Regular expression`
+Default value: none
+Mandatory: Yes
 
 A string value that is used to do something else with whatever else.
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  "regex-check": {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+Note that there are no default options and you must specify the configuration values
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+In this example, the configuration is looking through all javascript files in 'src', except for those excluded ones
+and will fail the build if the string 'console' is found
 
 ```js
 grunt.initConfig({
   "regex-check": {
+    files: "src/**/*.js",
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      excluded : "src/**/*xcluded.js",
+      pattern : /console/g
     },
   },
 })
@@ -87,3 +64,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 _(Nothing yet)_
+
+## Future Enhancements
+
+- Move pattern outside of options
+- Support multiple patterns
+- Support multiple exclusions
+- Support another configuration in the same file (e.g. another file set with a particular string)
