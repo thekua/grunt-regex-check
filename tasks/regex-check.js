@@ -9,26 +9,7 @@
 'use strict';
 
 module.exports = function (grunt) {
-    // TODO: Replace with underscore
-    var internalFlatten = function (input, output) {
-        input.forEach(function (value) {
-            if (Array.isArray(value)) {
-                var flattened = flatten(value, output);
-                flattened.forEach(function (item) {
-                    output.push(item);
-                });
-            } else {
-                output.push(value);
-            }
-        });
-        return output;
-    };
-
-    // Return a completely flattened version of an array.
-    var flatten = function (array) {
-        return internalFlatten(array, []);
-    };
-
+    var _ = require('underscore');
 
     grunt.registerMultiTask('regex-check', 'Look for patterns in code that should fail the build', function () {
         var options = this.options();
@@ -45,7 +26,7 @@ module.exports = function (grunt) {
             return false;
         }
 
-        var excludedFiles = flatten(excluded, false);
+        var excludedFiles = _.flatten(excluded);
         var isExcluded = function (filepath) {
             var isExcluded = false;
             excludedFiles.forEach(function (excludedFile) {
