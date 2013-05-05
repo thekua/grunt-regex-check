@@ -4,7 +4,9 @@ var _ = require('underscore');
 var grunt = require('grunt');
 
 
-var RegexCheck = function (options, log) {
+var RegexCheck = function (options, gruntLog) {
+    var log = gruntLog || grunt.log;
+
     var pattern = options.pattern;
     var excluded = options.excluded === '' ? undefined : grunt.file.expandMapping(options.excluded).map(function (srcDestinationMapping) {
         return srcDestinationMapping.src;
@@ -33,7 +35,7 @@ var RegexCheck = function (options, log) {
                 var matchingFiles = f.src.filter(function (filepath) {
                     // Warn on and remove invalid source files (if nonull was set).
                     if (!grunt.file.exists(filepath)) {
-                        grunt.log.warn('Source file "' + filepath + '" not found.');
+                        log.warn('Source file "' + filepath + '" not found.');
                         return false;
                     } else {
                         return true;
@@ -47,9 +49,9 @@ var RegexCheck = function (options, log) {
 
                 var allFiles = matchingFiles.join('\n');
                 if (matchingFiles.length === 0) {
-                    grunt.log.writeln('grunt-regex-check passed');
+                    log.writeln('grunt-regex-check passed');
                 } else {
-                    grunt.log.error("The following files contained unwanted patterns:\n\n" + allFiles +
+                    log.error("The following files contained unwanted patterns:\n\n" + allFiles +
                         "\n\nFiles that were excluded:\n" + excludedFiles.join('\n'));
                 }
 

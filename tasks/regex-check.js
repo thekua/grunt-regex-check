@@ -11,7 +11,6 @@
 module.exports = function (grunt) {
     var _ = require('underscore');
     var task = require('./lib/regex-check');
-    console.log("Task is: ", task);
 
     grunt.registerMultiTask('regex-check', 'Look for patterns in code that should fail the build', function () {
         var options = this.options();
