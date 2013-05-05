@@ -40,12 +40,14 @@ A string value that is used to do something else with whatever else.
 
 ### Usage Examples
 
-#### Default Options
-Note that there are no default options and you must specify the configuration values
+#### Options
 
-#### Custom Options
+_Note that there are no default options and you must specify the configuration values_
+
 In this example, the configuration is looking through all javascript files in 'src', except for those excluded ones
 and will fail the build if the string 'console' is found
+
+Example: Check all source files to ensure they do not contain `console`. Exclude those that have excluded in the file name
 
 ```js
 grunt.initConfig({
@@ -58,6 +60,21 @@ grunt.initConfig({
   },
 })
 ```
+
+Example: Check all files in `src/server` and `src/logger` to ensure they do not contain `throw` or `catch`. Exclude three specific files
+
+```js
+grunt.initConfig({
+  "regex-check": {
+    files: ["src/server/**/*.js", "src/logger/**/*.js"],
+    options: {
+      excluded : ["src/server/ajax/requestErrors.js", "src/logger/defaultErrorLogger.js", "src/server/jqueryPluginWrapper.js"],
+      pattern : /(throw)|(catch)/g
+    },
+  },
+})
+```
+
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).

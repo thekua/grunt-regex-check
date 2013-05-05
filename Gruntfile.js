@@ -30,22 +30,11 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     "regex-check": {
-      default_options: {
+        files: ["test/fixtures/**/*.js"],
         options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
+            excluded : ["src/**/*xcluded.js", 'src2/shouldBeExcluded.js'],
+            pattern : /console/g
+        }
     },
 
     // Unit tests.

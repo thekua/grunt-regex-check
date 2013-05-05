@@ -28,11 +28,12 @@ exports.regex_check = {
     done();
   },
   default_options: function(test) {
-    test.expect(1);
-
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+      console.log(grunt.file);
+//      files: ["test/fixtures/**/*.js"],
+//          options: {
+//          excluded : ["src/**/*xcluded.js", 'src2/shouldBeExcluded.js'],
+//              pattern : /console/g
+//      }
 
     test.done();
   },
