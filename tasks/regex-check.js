@@ -10,19 +10,19 @@
 
 module.exports = function (grunt) {
     var _ = require('underscore');
-    var regexCheck = require('./lib/regex-check');
+    var task = require('./lib/regex-check');
+    console.log("Task is: ", task);
 
     grunt.registerMultiTask('regex-check', 'Look for patterns in code that should fail the build', function () {
         var options = this.options();
         try {
-            var validatedOptions = regexCheck.init(options);
+            var regexCheck = new task(options);
+            regexCheck.check(this.files);
         } catch (error) {
             grunt.log.error(error);
             return false;
         }
 
-        var excludedFiles = _.flatten(validatedOptions.excluded);
-        regexCheck.check(this.files, validatedOptions.pattern, excludedFiles);
     });
 
 };
