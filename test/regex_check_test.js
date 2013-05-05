@@ -1,6 +1,7 @@
 'use strict';
 
 var grunt = require('grunt');
+var RegexCheck = require('../tasks/lib/regex-check');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -22,13 +23,53 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
+var helper = {
+    stubbedLogger: function () {
+        var captured, error;
+
+        return {
+            writeln: function (message) {
+                captured = message;
+            },
+            getCaptured: function () {
+                return captured;
+            },
+            error: function (errorMessage) {
+                error = errorMessage;
+            },
+            getError: function () {
+                return errro;
+            }
+        }
+    },
+    stubbedFile: function () {
+        return {
+            exists: function (file) {
+
+            },
+            read: function (file) {
+
+            }
+        }
+    }
+
+};
+
 exports.regex_check = {
+
   setUp: function(done) {
     // setup here if necessary
     done();
   },
   default_options: function(test) {
-      console.log(grunt.file);
+      var log = helper.stubbedLogger();
+      var file = helper.stubbedFile();
+      var pattern = /console/g;
+      var excluded = [];
+      var regexCheck = new RegexCheck(pattern, excluded, log, file);
+
+
+//      console.log(grunt.file);
 //      files: ["test/fixtures/**/*.js"],
 //          options: {
 //          excluded : ["src/**/*xcluded.js", 'src2/shouldBeExcluded.js'],
@@ -36,14 +77,5 @@ exports.regex_check = {
 //      }
 
     test.done();
-  },
-  custom_options: function(test) {
-    test.expect(1);
-
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
-
-    test.done();
-  },
+  }
 };
