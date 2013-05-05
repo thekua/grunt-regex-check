@@ -10,7 +10,7 @@
 
 module.exports = function (grunt) {
     var _ = require('underscore');
-    var task = require('./lib/regex-check');
+    var RegexCheck = require('./lib/regex-check');
 
     var expand = function(excluded) {
         return excluded === '' ? undefined : grunt.file.expandMapping(excluded).map(function (srcDestinationMapping) {
@@ -23,7 +23,7 @@ module.exports = function (grunt) {
         try {
             var pattern = options.pattern;
             var excluded = _.flatten(expand(options.excluded));
-            var regexCheck = new task(pattern, excluded);
+            var regexCheck = new RegexCheck(pattern, excluded, grunt.log, grunt.file);
             regexCheck.check(this.files);
         } catch (error) {
             grunt.log.error(error);

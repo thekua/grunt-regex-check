@@ -1,12 +1,11 @@
 'use strict';
 
 var _ = require('underscore');
-var grunt = require('grunt');
 
 
 var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile) {
-    var log = gruntLog || grunt.log;
-    var file = gruntFile || grunt.file;
+    var log = gruntLog;
+    var file = gruntFile;
 
     var excludedFiles = listOfExcludedFiles || [];
     if (pattern === undefined) {
