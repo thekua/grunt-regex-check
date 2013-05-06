@@ -79,3 +79,11 @@ exports.regex_check = {
     test.done();
   }
 };
+
+var assert = require("assert")
+
+describe("Something with mohca", function() {
+    it("should do something", function() {
+        assert.equal(-1, [1,2,3].indexOf(5));
+    });
+});
