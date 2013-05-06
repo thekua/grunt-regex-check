@@ -33,7 +33,8 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt": "~0.4.1",
     "grunt-mocha-test": "~0.2.2",
-    "should": "~1.2.2"
+    "should": "~1.2.2",
+    "sinon": "~1.6.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
