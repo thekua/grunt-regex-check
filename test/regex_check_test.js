@@ -80,10 +80,11 @@ exports.regex_check = {
   }
 };
 
-var assert = require("assert")
+var should = require("should");
 
 describe("Something with mohca", function() {
     it("should do something", function() {
-        assert.equal(-1, [1,2,3].indexOf(5));
+        var expected = -1;
+        [1,2,3].indexOf(5).should.equal(expected);
     });
 });
