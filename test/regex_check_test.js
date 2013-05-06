@@ -80,8 +80,6 @@ exports.regex_check = {
   }
 };
 
-var should = require("should");
-
 describe("Something with mohca", function() {
     it("should do something", function() {
         var expected = -1;

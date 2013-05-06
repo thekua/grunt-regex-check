@@ -45,6 +45,11 @@ module.exports = function(grunt) {
     mochaTest: {
           files: ['test/**/*test.js']
     },
+      mochaTestConfig: {
+          options: {
+              require: 'node_modules/should/lib/should'
+          }
+      }
 
 
   });
