@@ -27,6 +27,8 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile) {
 
     return {
         check: function (files) {
+            var ranOnce = false;
+
             files.forEach(function (f) {
                 var matchingFiles = f.src.filter(function (filepath) {
                     // Warn on and remove invalid source files (if nonull was set).
@@ -37,6 +39,7 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile) {
                         return true;
                     }
                 }).filter(function (filepath) {
+                        ranOnce = true;
                         var source = file.read(filepath);
                         var matchesPattern = source.match(pattern) !== null;
                         var isNotExcluded = !isExcluded(filepath, excludedFiles);
@@ -52,6 +55,9 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile) {
                 }
 
             });
+            if(!ranOnce) {
+                log.warn("No files were processed. You may want to check you configuration. Files detected: " + files.join(','));
+            }
         }
     };
 };
