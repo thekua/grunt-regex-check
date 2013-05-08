@@ -80,11 +80,10 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+- 0.1.1 Fix bug of "Cannot call method 'indexOf' of undefined" when you do not specify any exclusions
+- 0.1.0 Initial release
 
 ## Future Enhancements
 
 - Move pattern outside of options
-- Support multiple patterns
-- Support multiple exclusions
 - Support another configuration in the same file (e.g. another file set with a particular string)

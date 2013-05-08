@@ -13,7 +13,7 @@ module.exports = function (grunt) {
     var RegexCheck = require('./lib/regex-check');
 
     var expand = function(excluded) {
-        return excluded === '' ? undefined : grunt.file.expandMapping(excluded).map(function (srcDestinationMapping) {
+        return excluded === undefined ? [] : grunt.file.expandMapping(excluded).map(function (srcDestinationMapping) {
             return srcDestinationMapping.src;
         });
     };
