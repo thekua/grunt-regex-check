@@ -38,19 +38,26 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile) {
                     } else {
                         return true;
                     }
-                }).filter(function (filepath) {
-                        ranOnce = true;
-                        var source = file.read(filepath);
-                        var matchesPattern = source.match(pattern) !== null;
-                        var isNotExcluded = !isExcluded(filepath, excludedFiles);
-                        return matchesPattern && isNotExcluded;
+                }).map(function (filepath) {
+                    ranOnce = true;
+                    var source = file.read(filepath);
+                    var match = source.match(pattern);
+                    return {
+                      filepath: filepath,
+                      match: match,
+                      isNotExcluded: !isExcluded(filepath, excludedFiles)
+                    };
+                }).filter(function (result) {
+                    return result.match !== null && result.isNotExcluded;
                     });
 
-                var allFiles = matchingFiles.join('\n');
                 if (matchingFiles.length === 0) {
                     log.writeln('grunt-regex-check passed');
                 } else {
-                    log.error("The following files contained unwanted patterns:\n\n" + allFiles +
+                    var filesMessages = matchingFiles.map(function (matchingFile) {
+                      return matchingFile.filepath + " - failed because it matched '" + matchingFile.match[0] + "'";
+                    }).join('\n');
+                    log.error("The following files contained unwanted patterns:\n\n" + filesMessages +
                         "\n\nFiles that were excluded:\n" + excludedFiles.join('\n'));
                 }
 
