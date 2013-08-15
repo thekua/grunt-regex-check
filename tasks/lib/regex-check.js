@@ -1,8 +1,5 @@
 'use strict';
 
-var _ = require('underscore');
-
-
 var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile) {
     var log = gruntLog;
     var file = gruntFile;
