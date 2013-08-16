@@ -80,6 +80,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.1.4 Apply pull request to remove dependency on underscore
 - 0.1.3 Bump version to update documentation and keep release in sync
 - 0.1.2 Apply pull request to note which pattern caused the violation per file
 - 0.1.1 Fix bug of "Cannot call method 'indexOf' of undefined" when you do not specify any exclusions
