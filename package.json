@@ -41,8 +41,5 @@
   },
   "keywords": [
     "gruntplugin"
-  ],
-  "dependencies": {
-    "underscore": "~1.4.4"
-  }
+  ]
 }

@@ -9,7 +9,6 @@
 'use strict';
 
 module.exports = function (grunt) {
-    var _ = require('underscore');
     var RegexCheck = require('./lib/regex-check');
 
     var expand = function(excluded) {
@@ -22,7 +21,7 @@ module.exports = function (grunt) {
         var options = this.options();
         try {
             var pattern = options.pattern;
-            var excluded = _.flatten(expand(options.excluded));
+            var excluded = grunt.util._.flatten(expand(options.excluded));
             var regexCheck = new RegexCheck(pattern, excluded, grunt.log, grunt.file);
             regexCheck.check(this.files);
         } catch (error) {
