@@ -47,7 +47,7 @@ _Note that there are no default options and you must specify the configuration v
 In this example, the configuration is looking through all javascript files in 'src', except for those excluded ones
 and will fail the build if the string 'console' is found
 
-Example: Check all source files to ensure they do not contain `console`. Exclude those that have excluded in the file name
+__Example__: Check all source files to ensure they do not contain `console`. Exclude those that have excluded in the file name
 
 ```js
 grunt.initConfig({
@@ -61,7 +61,7 @@ grunt.initConfig({
 })
 ```
 
-Example: Check all files in `src/server` and `src/logger` to ensure they do not contain `throw` or `catch`. Exclude three specific files
+__Example__: Check all files in `src/server` and `src/logger` to ensure they do not contain `throw` or `catch`. Exclude three specific files
 
 ```js
 grunt.initConfig({
@@ -71,6 +71,33 @@ grunt.initConfig({
       excluded : ["src/server/ajax/requestErrors.js", "src/logger/defaultErrorLogger.js", "src/server/jqueryPluginWrapper.js"],
       pattern : /(throw)|(catch)/g
     },
+  },
+})
+```
+
+__Example__: [User contributed example - thanks eitanp461](https://github.com/thekua/grunt-regex-check/issues/6) 
+
+```js
+grunt.initConfig({
+  "regex-check": {
+        directives: {
+            files: [
+                {src: ['app/js/**/*-drtv.js']}
+            ],
+            options: {
+                // force file naming conventions
+                pattern: /templateUrl(?!(.*-tmpl.html|.*\{|;))/g
+            }
+        },
+        scopes: {
+            files: [
+                {src: ['app/js/**/*.js']}
+            ],
+            // Check that scopes that are created programatically with $new are eventually cleaned up
+            options: {
+                pattern: /\$new(?!(\$on('\$destroy')))/g
+            }
+        }
   },
 })
 ```
