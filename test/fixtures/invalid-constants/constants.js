@@ -1,0 +1,1 @@
+var INVALID_CONSTANT = 10;

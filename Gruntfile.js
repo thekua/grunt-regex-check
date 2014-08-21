@@ -29,10 +29,19 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     "regex-check": {
-        files: ["test/fixtures/**/*.js"],
-        options: {
-            excluded : ["src/**/*xcluded.js", 'src2/shouldBeExcluded.js'],
-            pattern : /console/g
+        test: {
+          src: ["test/fixtures/**/*.js"],
+          options: {
+              excluded : ["src/**/*xcluded.js", 'src2/shouldBeExcluded.js'],
+              pattern : /console/g
+          }
+        },
+        warnOnly: {
+          src: 'test/fixtures/invalid-constants/*.js',
+          options: {
+            pattern: /INVALID/,
+            breakOnError: false
+          }
         }
     },
 
