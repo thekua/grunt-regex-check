@@ -1,7 +1,7 @@
 {
   "name": "grunt-regex-check",
   "description": "Grunt plugin to detect illegal expressions in javascript code with regular expressions",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "homepage": "https://github.com/thekua/grunt-regex-check",
   "author": {
     "name": "Patrick Kua",

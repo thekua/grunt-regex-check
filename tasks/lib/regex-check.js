@@ -1,7 +1,7 @@
 'use strict';
 var grunt = require('grunt');
 
-var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile) {
+var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, warnOnly) {
     var log = gruntLog;
     var file = gruntFile;
 
@@ -55,8 +55,13 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile) {
                     var filesMessages = matchingFiles.map(function (matchingFile) {
                       return matchingFile.filepath + " - failed because it matched '" + matchingFile.match[0] + "'";
                     }).join('\n');
-                    grunt.fail.warn("The following files contained unwanted patterns:\n\n" + filesMessages +
-                        "\n\nFiles that were excluded:\n" + excludedFiles.join('\n'));
+                    var msg = "The following files contained unwanted patterns:\n\n" + filesMessages +
+                        "\n\nFiles that were excluded:\n" + excludedFiles.join('\n');
+                    if (warnOnly) {
+                        log.warn(msg);
+                    } else {
+                        grunt.fail.warn(msg);
+                    }
                 }
 
             });

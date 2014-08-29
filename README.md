@@ -38,6 +38,13 @@ Mandatory: Yes
 
 A string value that is used to do something else with whatever else.
 
+#### options.breakOnError
+Type: `boolean`
+Default value: true
+Mandatory: false
+
+By setting to `false` you can only warn the user, but not break the build.
+
 ### Usage Examples
 
 #### Options
@@ -61,6 +68,21 @@ grunt.initConfig({
 })
 ```
 
+__Example__: Find `console` calls, but only warn the user without stopping the grunt build
+
+```js
+grunt.initConfig({
+  "regex-check": {
+    files: "src/**/*.js",
+    options: {
+      excluded : "src/**/*xcluded.js",
+      pattern : /console/g,
+      breakOnError: false
+    },
+  },
+})
+```
+
 __Example__: Check all files in `src/server` and `src/logger` to ensure they do not contain `throw` or `catch`. Exclude three specific files
 
 ```js
@@ -75,7 +97,7 @@ grunt.initConfig({
 })
 ```
 
-__Example__: [User contributed example - thanks eitanp461](https://github.com/thekua/grunt-regex-check/issues/6) 
+__Example__: [User contributed example - thanks eitanp461](https://github.com/thekua/grunt-regex-check/issues/6)
 
 ```js
 grunt.initConfig({
@@ -107,6 +129,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.1.6 Apply pull request to add option breakOnError
 - 0.1.5 Apply pull request to use grunt fail warn
 - 0.1.4 Apply pull request to remove dependency on underscore
 - 0.1.3 Bump version to update documentation and keep release in sync
@@ -116,5 +139,6 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Future Enhancements
 
+- Add automated tests for breakOnError
 - Move pattern outside of options
 - Support another configuration in the same file (e.g. another file set with a particular string)
