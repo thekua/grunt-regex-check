@@ -1,32 +1,18 @@
 'use strict';
 var grunt = require('grunt');
+var utils = require('./utils.js');
 
 var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, warnOnly) {
+
     var log = gruntLog;
     var file = gruntFile;
-
     var excludedFiles = listOfExcludedFiles || [];
-    if (pattern === undefined) {
-        throw "Configuration option 'pattern' was not specified";
-    }
-    if (typeof pattern !== 'object') {
-        throw "Configuration option 'pattern' should be a javascript regular expression";
-    }
 
-    var isExcluded = function (filepath) {
-        var isExcluded = false;
-        excludedFiles.forEach(function (excludedFile) {
-            if (excludedFile === filepath) {
-                isExcluded = true;
-            }
-        });
-        return isExcluded;
-    };
+    pattern = utils.checkPattern(pattern);
 
     return {
         check: function (files) {
             var ranOnce = false;
-
             files.forEach(function (f) {
                 var matchingFiles = f.src.filter(function (filepath) {
                     // Warn on and remove invalid source files (if nonull was set).
@@ -38,22 +24,24 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, wa
                     }
                 }).map(function (filepath) {
                     ranOnce = true;
-                    var source = file.read(filepath);
-                    var match = source.match(pattern);
-                    return {
-                      filepath: filepath,
-                      match: match,
-                      isNotExcluded: !isExcluded(filepath, excludedFiles)
-                    };
+                    var result = utils.fileContentChecker(pattern, file.read(filepath), filepath, excludedFiles);
+                    return result;
+
                 }).filter(function (result) {
-                    return result.match !== null && result.isNotExcluded;
-                    });
+                    return result.matches.length !== 0 && result.isNotExcluded;
+                });
 
                 if (matchingFiles.length === 0) {
                     log.writeln('grunt-regex-check passed');
                 } else {
                     var filesMessages = matchingFiles.map(function (matchingFile) {
-                      return matchingFile.filepath + " - failed because it matched '" + matchingFile.match[0] + "'";
+                        var message = matchingFile.filepath + " - failed because it matched following patterns : ";
+                        var prefix = "";
+                        matchingFile.matches.forEach(function (element) {
+                            message += prefix + "'" + element + "'";
+                            prefix = ", "
+                        });
+                        return message;
                     }).join('\n');
                     var msg = "The following files contained unwanted patterns:\n\n" + filesMessages +
                         "\n\nFiles that were excluded:\n" + excludedFiles.join('\n');
@@ -65,14 +53,11 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, wa
                 }
 
             });
-            if(!ranOnce) {
+            if (!ranOnce) {
                 log.warn("No files were processed. You may want to check you configuration. Files detected: " + files.join(','));
             }
         }
     };
 };
 
-
 module.exports = RegexCheck;
-
-
