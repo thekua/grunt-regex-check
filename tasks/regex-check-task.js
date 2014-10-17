@@ -24,7 +24,7 @@ module.exports = function (grunt) {
         try {
             var pattern = options.pattern;
             var excluded = grunt.util._.flatten(expand(options.excluded));
-            var regexCheck = new RegexCheck(pattern, excluded, grunt.log, grunt.file, !options.breakOnError);
+            var regexCheck = new RegexCheck(pattern, excluded, grunt.log, grunt.file, !options.breakOnError, this.target);
             regexCheck.check(this.files);
         } catch (error) {
             grunt.log.error(error);
