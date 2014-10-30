@@ -29,14 +29,12 @@ Type: `String`
 Default value: none
 Mandatory: No
 
-A string value that is used to do something with whatever.
-
 #### options.pattern
-Type: `Regular expression`
+Type: `Regular expression` or an Array of Regular Expression
 Default value: none
 Mandatory: Yes
 
-A string value that is used to do something else with whatever else.
+An Array of Regular Expression to match files content
 
 #### options.breakOnError
 Type: `boolean`

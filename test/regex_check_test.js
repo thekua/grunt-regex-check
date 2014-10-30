@@ -2,7 +2,8 @@
 
 var grunt = require('grunt');
 var RegexCheck = require('../tasks/lib/regex-check');
-
+var utils = require('../tasks/lib/utils');
+var assert = require('assert')
 var sinon = require ('sinon');
 
 describe("regex-check", function() {
@@ -10,6 +11,18 @@ describe("regex-check", function() {
         it("should fail if no pattern present", sinon.test(function() {
             (function() {
                 new RegexCheck(undefined, [], this.stub(grunt.log), this.stub(grunt.file));
+            }).should.throw();
+        }));
+
+        it("should fail if empty array pattern present", sinon.test(function() {
+            (function() {
+                new RegexCheck([], [], this.stub(grunt.log), this.stub(grunt.file));
+            }).should.throw();
+        }));
+
+        it("should fail if string in array as pattern", sinon.test(function() {
+            (function() {
+                new RegexCheck([/aPattern/g,/aPattern/g,'failRegex'], [], this.stub(grunt.log), this.stub(grunt.file));
             }).should.throw();
         }));
 
@@ -33,5 +46,27 @@ describe("regex-check", function() {
 
             log.warn.called.should.be.true;
         }));
+
+        it("should match for a pattern", sinon.test(function() {
+            var fileResult = utils.fileContentChecker([/text/g], "text content", "filepath", []);
+            assert.equal(fileResult.matches.length, 1);
+        }));
+
+        it("should match for several patterns", sinon.test(function() {
+            var fileResult = utils.fileContentChecker([/text/g,/content/g], "text content", "filepath", []);
+            assert.equal(fileResult.matches.length, 2);
+        }));
+
+
+        it("should not always match for several patterns", sinon.test(function() {
+            var fileResult = utils.fileContentChecker([/text/g,/contentaaaaa/g], "text content", "filepath", []);
+            assert.equal(fileResult.matches.length, 1);
+        }));
+
+        it("should not match excluded file", sinon.test(function() {
+            var fileResult = utils.fileContentChecker([/text/g,/contentaaaaa/g], "text content", "filepath", ["filepath"]);
+            assert.equal(fileResult.matches.length,0);
+        }));
+
     });
 });
