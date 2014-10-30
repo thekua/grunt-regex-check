@@ -127,6 +127,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.1.9 Update to include pattern regex patch https://github.com/thekua/grunt-regex-check/pull/9
 - 0.1.8 Update documentation to keep in sync
 - 0.1.7 Upgrade of npm to fix broken publish with old version
 - 0.1.6 Apply pull request to add option breakOnError

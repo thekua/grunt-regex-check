@@ -2,7 +2,7 @@
  * grunt-regex-check
  * https://github.com/thekua/grunt-regex-check
  *
- * Copyright (c) 2013 Patrick Kua
+ * Copyright (c) 2014 Patrick Kua
  * Licensed under the MIT license.
  */
 
