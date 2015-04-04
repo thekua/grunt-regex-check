@@ -35,7 +35,12 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, wa
                     log.writeln('grunt-regex-check passed');
                 } else {
                     var filesMessages = matchingFiles.map(function (matchingFile) {
-                        var message = matchingFile.filepath + " - failed because it matched following patterns : ";
+                        var message = matchingFile.filepath;
+                        if (failIfMissing) {
+                            meassage += " - failed because the following pattern was missing : ";
+                        } else {
+                            meassage += " - failed because it matched following patterns : ";
+                        }
                         var prefix = "";
                         matchingFile.matches.forEach(function (element) {
                             message += prefix + "'" + element + "'";
