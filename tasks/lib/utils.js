@@ -13,7 +13,10 @@ var utils =
         }
         if (failIfMissing) {
             if (matches.length === 0) {
-                matches = [pattern.toString()]
+                matches = [pattern.toString()];
+            } else if (matches.length > 0) {
+                // The file matched a pattern so we return that there were no problems.
+                matches = [];
             }
         }
         return {
