@@ -1,7 +1,7 @@
 'use strict';
 var utils =
 {
-    fileContentChecker: function (pattern, source, filepath, excludedFiles) {
+    fileContentChecker: function (pattern, source, filepath, excludedFiles, failIfMissing) {
         var matches = [];
         var isExcluded = utils.isExcluded(filepath, excludedFiles);
         if (!isExcluded) {
@@ -10,6 +10,14 @@ var utils =
                 if (match)
                     matches.push(match);
             });
+        }
+        if (failIfMissing) {
+            if (matches.length === 0) {
+                matches = [pattern.toString()];
+            } else if (matches.length > 0) {
+                // The file matched a pattern so we return that there were no problems.
+                matches = [];
+            }
         }
         return {
             filepath: filepath,

@@ -2,7 +2,7 @@
 var grunt = require('grunt');
 var utils = require('./utils.js');
 
-var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, warnOnly) {
+var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, warnOnly, failIfMissing) {
 
     var log = gruntLog;
     var file = gruntFile;
@@ -24,7 +24,7 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, wa
                     }
                 }).map(function (filepath) {
                     ranOnce = true;
-                    var result = utils.fileContentChecker(pattern, file.read(filepath), filepath, excludedFiles);
+                    var result = utils.fileContentChecker(pattern, file.read(filepath), filepath, excludedFiles, failIfMissing);
                     return result;
 
                 }).filter(function (result) {
@@ -35,7 +35,12 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, wa
                     log.writeln('grunt-regex-check passed');
                 } else {
                     var filesMessages = matchingFiles.map(function (matchingFile) {
-                        var message = matchingFile.filepath + " - failed because it matched following patterns : ";
+                        var message = matchingFile.filepath;
+                        if (failIfMissing) {
+                            message += " - failed because the following pattern was missing : ";
+                        } else {
+                            message += " - failed because it matched following patterns : ";
+                        }
                         var prefix = "";
                         matchingFile.matches.forEach(function (element) {
                             message += prefix + "'" + element + "'";

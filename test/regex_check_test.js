@@ -68,5 +68,14 @@ describe("regex-check", function() {
             assert.equal(fileResult.matches.length,0);
         }));
 
+        it("should return match if no match for a pattern", sinon.test(function() {
+            var fileResult = utils.fileContentChecker([/nomatch/g], "text content", "filepath", [], false, true);
+            assert.equal(fileResult.matches.length, 1);
+        }));
+
+        it("should return no match if there is a match for a pattern", sinon.test(function() {
+            var fileResult = utils.fileContentChecker([/text/g], "text content", "filepath", [], false, true);
+            assert.equal(fileResult.matches.length, 0);
+        }));
     });
 });

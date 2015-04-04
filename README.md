@@ -41,7 +41,12 @@ Type: `boolean`
 Default value: true
 Mandatory: false
 
-By setting to `false` you can only warn the user, but not break the build.
+#### options.failIfMissing
+Type: `boolean`
+Default value: false
+Mandatory: false
+
+By setting to `true` the file will be noted as failing if the pattern does NOT exist in the file.
 
 ### Usage Examples
 
@@ -76,6 +81,22 @@ grunt.initConfig({
       excluded : "src/**/*xcluded.js",
       pattern : /console/g,
       breakOnError: false
+    },
+  },
+})
+```
+
+__Example__: warns the user that the <!DOCTYPE html> is missing from the top of the file
+
+```js
+grunt.initConfig({
+  "regex-check": {
+    files: "src/**/*.html",
+    options: {
+      excluded : "src/**/*xcluded.html",
+      pattern : /^<!DOCTYPE html>/g,
+      breakOnError: false,
+      failIfMissing: true
     },
   },
 })
