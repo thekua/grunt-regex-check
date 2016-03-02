@@ -2,7 +2,7 @@
 var grunt = require('grunt');
 var utils = require('./utils.js');
 
-var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, warnOnly) {
+var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, warnOnly, name) {
 
     var log = gruntLog;
     var file = gruntFile;
@@ -35,7 +35,7 @@ var RegexCheck = function (pattern, listOfExcludedFiles, gruntLog, gruntFile, wa
                     log.writeln('grunt-regex-check passed');
                 } else {
                     var filesMessages = matchingFiles.map(function (matchingFile) {
-                        var message = matchingFile.filepath + " - failed because it matched following patterns : ";
+                        var message = name + ': ' + matchingFile.filepath + " - failed because it matched following patterns : ";
                         var prefix = "";
                         matchingFile.matches.forEach(function (element) {
                             message += prefix + "'" + element + "'";
